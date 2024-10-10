@@ -62,3 +62,110 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 ```
+
+## Create Our Own APPs
+
+To create an app called `playground`, run the 
+following command in your Django project directory:
+
+```
+python manage.py startapp playground
+```
+
+This command will create a new app folder called 
+`playground`, with a specific directory structure.
+
+```
+.
+├── playground
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+├── ...
+└── .gitignore
+```
+
+The new app follows a standard Django app 
+structure. Here's a brief explanation of the 
+key files and directories:
+
+- `migrations/`: for generating database tables
+- `__init__.py`: marks the directory as a Python package
+- `admin.py`: defines how the admin interface is going to look like
+- `apps.py`: contains the configurations for the app
+- `models.py`: defines the model classes for the app
+- `test.py`: where we write the unit tests
+- `views.py`: we will talk about in the next lesson
+
+Next, register the app in the `.\storefront\settings.py `
+file by adding it to the `INSTALLED_APPS` list:
+
+```Python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'playground',
+]
+```
+
+## Writing Views
+
+HTTP is a **response request protocal**, so every data 
+exchange involves a request and a response. This is 
+where **views** come into play in Django.
+
+Create a new file `.\playground\views.py`:
+
+```Python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
+def say_hello(request):
+    return render(request, 'hello.html', {'name': 'wyatthoho'})
+```
+
+
+## Mapping URLs to Views
+
+Add a new file `.\playground\urls.py`. You can
+name it anything you like, but by convention, 
+we call it `urls.py`.
+
+```Python
+from django.urls import path
+from . import views
+
+# URLConf
+urlpatterns = [
+    path('hello/', views.say_hello)
+]
+```
+
+Every app can have its own URL configuration.
+Now we need to import this URL configuration into 
+the main URL configuration for the project.
+
+Modify the `.\storefront\urls.py`:
+
+```Python
+"""
+Skip the comments...
+"""
+import debug_toolbar
+from django.contrib import admin
+from django.urls import path, include
+
+# playground/hello
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('playground/', include('playground.urls')),
+]
+```
