@@ -129,7 +129,7 @@ from django.http import HttpResponse
 
 
 def say_hello(request):
-    return render(request, 'hello.html', {'name': 'wyatthoho'})
+    return HttpResponse('Hello, World!')
 ```
 
 
@@ -168,4 +168,65 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/', include('playground.urls')),
 ]
+```
+
+## Using Templates
+
+Let's see how we can use a **template** to return
+**HTML** content to the client.
+
+We're going to add a folder `.\playground\templates`.
+In this folder, we're going to add a new file called
+`hello.html`. We can write some HTML markup, for example:
+
+```html
+<html>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>
+```
+
+Back to `.\playground\views.py`, we're going to
+use the render function to render a template and
+return HTML markup to the client.
+
+```Python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
+def say_hello(request):
+    return render(request, 'hello.html')
+```
+
+We can dynamically render some value. There 
+is a context object and the type of this is a
+mapping of string to Any. So, here we can pass
+a dictionary.
+
+```Python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
+def say_hello(request):
+    return render(request, 'hello.html', {'name': 'wyatthoho'})
+```
+
+Now, back to our template. Instead of `Hello, World!`,
+we can render the name that we passed here.
+
+```html
+<html>
+
+<body>
+    {% if name %}
+    <h1>Hello {{name}}</h1>
+    {% else %}
+    <h1>Hello, World!</h1>
+    {% endif %}
+</body>
+
+</html>
 ```
