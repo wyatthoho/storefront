@@ -230,3 +230,67 @@ we can render the name that we passed here.
 
 </html>
 ```
+
+## Using Django Debug Toolbar
+
+First, we have to install Django Debug Toolbar:
+
+```
+pip install django-debug-toolbar
+```
+
+The next step is to add debug toolbar in the list
+of `INSTALLED_APPS` in `.\storefront\settings.py`:
+
+```python
+INSTALLED_APPS = [
+    # ...,
+    'debug_toolbar',
+]
+```
+
+The next step is to add a new URL pattern in 
+`.\storefront\urls.py`:
+
+```python
+import debug_toolbar
+
+urlpatterns = [
+    # ...,
+    path('__debug__/', include(debug_toolbar.urls)),
+]
+```
+
+The next step is to add a **middleware**. We use
+middleware to hook into Django's request response
+processing. In `.\storefront\settings.py` we're going
+to add this line:
+
+```python
+MIDDLEWARE = [
+    # ...,
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # ...,
+]
+```
+
+The final step is to add our IP address in the 
+`INTERNAL_IPS` in `.\storefront\settings.py`:
+
+```python
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+```
+
+Because the toolbar only appears when we return 
+a proper HTML document, we must have to create
+the **head** and **body** elements, that is:
+
+```html
+<html>
+    <body>
+    <!-- ... -->
+    </body>
+</html>
+```
