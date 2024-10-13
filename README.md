@@ -192,14 +192,21 @@ Let's see how we can use a **template** to return
 
 We're going to add a folder `.\playground\templates`.
 In this folder, we're going to add a new file called
-`hello.html`. We can write some HTML markup, for example:
+`hello.html`. 
+
+```
+.
+├── playground
+│   ├── templates
+│   │   └── hello.html
+│   └── ...
+└── ...
+```
+
+We can write some HTML markup, for example:
 
 ```html
-<html>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>
+<h1>Hello, World!</h1>
 ```
 
 Back to `.\playground\views.py`, we're going to
@@ -215,9 +222,11 @@ def say_hello(request):
     return render(request, 'hello.html')
 ```
 
+![](./img/hello-world-html.png)
+
 We can dynamically render some value. There 
 is a context object and the type of this is a
-mapping of string to Any. So, here we can pass
+mapping of `str` to `Any`. So, here we can pass
 a dictionary.
 
 ```Python
@@ -233,18 +242,14 @@ Now, back to our template. Instead of `Hello, World!`,
 we can render the name that we passed here.
 
 ```html
-<html>
-
-<body>
-    {% if name %}
-    <h1>Hello {{name}}</h1>
-    {% else %}
-    <h1>Hello, World!</h1>
-    {% endif %}
-</body>
-
-</html>
+{% if name %}
+<h1>Hello, {{name}}!</h1>
+{% else %}
+<h1>Hello, World!</h1>
+{% endif %}
 ```
+
+![](./img/hello-world-name.png)
 
 ## Using Django Debug Toolbar
 
