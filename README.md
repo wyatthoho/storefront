@@ -2,8 +2,8 @@
 
 This repository is my practice work based on 
 the instructions from the YouTube video 
-[Python Django Tutorial for Beginners](https://youtu.be/rHux0gMZ3Eg?si=nLOUg8gMsjWm2-2j).
-
+[Python Django Tutorial for Beginners](https://youtu.be/rHux0gMZ3Eg?si=nLOUg8gMsjWm2-2j)
+by the channel *Programming with Mosh*.
 
 # Notes
 
@@ -24,7 +24,14 @@ Afterward, activate the environment with:
 .\env\Scripts\activate
 ```
 
-The required packages are listed in the `requirements.txt` file.
+The required packages are listed in the `requirements.txt`, 
+which includes the following:
+
+```
+Django==5.1
+django-debug-toolbar==4.4.6
+```
+
 Install the required packages into the environment with:
 ```
 pip install -r .\requirements.txt
@@ -32,9 +39,23 @@ pip install -r .\requirements.txt
 
 
 ## Initialize the Django Project
-Start the project at the current directory with:
+To start the project in the current directory, run 
+the following command:
 ```
 django-admin startproject storefront .
+```
+
+This will create the following files:
+
+```
+.
+├── storefront
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── manage.py
 ```
 
 To start the development server, run:
@@ -44,6 +65,8 @@ python manage.py runserver
 
 The development server will be accessible 
 at `http://127.0.0.1:8000/`.
+
+![](./img/run-server.png)
 
 Next, remove `'django.contrib.sessions'` from the 
 automatically generated `INSTALLED_APPS` list in 
@@ -85,8 +108,7 @@ This command will create a new app folder called
 │   ├── models.py
 │   ├── tests.py
 │   └── views.py
-├── ...
-└── .gitignore
+└── ...
 ```
 
 The new app follows a standard Django app 
@@ -106,12 +128,9 @@ file by adding it to the `INSTALLED_APPS` list:
 
 ```Python
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # ...,
     'playground',
+    # ...,
 ]
 ```
 
@@ -121,7 +140,7 @@ HTTP is a **response request protocal**, so every data
 exchange involves a request and a response. This is 
 where **views** come into play in Django.
 
-Create a new file `.\playground\views.py`:
+Create your views in `.\playground\views.py`:
 
 ```Python
 from django.shortcuts import render
@@ -131,7 +150,6 @@ from django.http import HttpResponse
 def say_hello(request):
     return HttpResponse('Hello, World!')
 ```
-
 
 ## Mapping URLs to Views
 
@@ -156,19 +174,16 @@ the main URL configuration for the project.
 Modify the `.\storefront\urls.py`:
 
 ```Python
-"""
-Skip the comments...
-"""
-import debug_toolbar
-from django.contrib import admin
+# ...
 from django.urls import path, include
 
-# playground/hello
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # ...,
     path('playground/', include('playground.urls')),
 ]
 ```
+
+![](./img/hello-world.png)
 
 ## Using Templates
 
