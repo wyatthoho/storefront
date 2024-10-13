@@ -305,12 +305,23 @@ INTERNAL_IPS = [
 
 Because the toolbar only appears when we return 
 a proper HTML document, we must have to create
-the **head** and **body** elements, that is:
+the **head** and **body** elements for our templates, 
+that is `.\playground\templates\hello.html` should be
+modified as:
 
 ```html
 <html>
     <body>
-    <!-- ... -->
+    {% if name %}
+    <h1>Hello, {{name}}!</h1>
+    {% else %}
+    <h1>Hello, World!</h1>
+    {% endif %}
     </body>
 </html>
 ```
+
+Now we have various panels, including history, versions, 
+time, and more.
+
+![](./img/debug-toolbar.png)
